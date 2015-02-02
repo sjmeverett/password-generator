@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Password generator</title>
+    
+    <style>
+      body {
+        font-family: 'Open Sans', sans-serif;
+        margin: 0 10px;
+      }
+      
+      .form-group {
+        margin: 10px 0; 
+      }
+      
+      input {
+        padding: 10px;
+        border-radius: 3px;
+        border: 1px solid #ddd;
+        width: 400px;
+        margin: 0;
+      }
+      
+      .output {
+        padding: 10px;
+        border-radius: 3px;
+        background: #ddd;
+        color: #333;
+        width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    
+    <script src="sha1.js"></script>
+    <script src="index.js"></script>
+    <script src="http://cdn.ractivejs.org/latest/ractive.js"></script>
+    
+    <script id="template" type="text/ractive">
+      <h1>Password generator</h1>
+      
+      <div class="form-group">
+        <input type="password" value="{{master}}" placeholder="master password">
+      </div>
+      
+      <div class="form-group">
+        <input type="text" value="{{domain}}" placeholder="domain">
+      </div>
+      
+      <div class="form-group">
+        <input type="text" value="{{user}}" placeholder="user">
+      </div>
+      
+      {{#master}}
+      <div class="output">
+        {{generate(master,domain,user)}}
+      </div>
+      {{/master}}
+    </script>
+    
+    <script>
+      var ractive = new Ractive({el: 'container', template: '#template', data: {generate: passwords.generate}});
+    </script>
+  </body>
+</html>
