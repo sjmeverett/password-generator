@@ -1,17 +1,18 @@
 
 var passwords = {};
 
-passwords.generate = function (master, domain, user) {
+passwords.generate = function (wordCount, master, domain, user) {
   var hash = Sha1.hash(master + domain + user);
+  var password = '';
   
-  return [0,3,6,9]
-    .map(function (i) {
-      var array = i < 9 ? passwords.adjectives : passwords.animals;
-      var n = parseInt(hash.slice(i, i + 3), 16) % array.length;
-      var word = array[n];
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join('');
+  for (var i = 0; i < wordCount; i++) {
+    var array = i < wordCount - 1 ? passwords.adjectives : passwords.animals;
+    var n = parseInt(hash.slice(i * 3, (i + 1) * 3), 16) % array.length;
+    var word = array[n];
+    password += word.charAt(0).toUpperCase() + word.slice(1);
+  }
+  
+  return password;
 };
 
 
